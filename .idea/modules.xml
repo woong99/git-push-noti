@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/naverworks.iml" filepath="$PROJECT_DIR$/.idea/naverworks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/naverworks.main.iml" filepath="$PROJECT_DIR$/.idea/modules/naverworks.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/naverworks.test.iml" filepath="$PROJECT_DIR$/.idea/modules/naverworks.test.iml" />
+    </modules>
+  </component>
+</project>

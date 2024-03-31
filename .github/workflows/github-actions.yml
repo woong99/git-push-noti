@@ -1,0 +1,49 @@
+name: github-actions # Workflow의 이름
+
+on: # 이벤트 트리거 설정
+  push: # push 이벤트 발생 시
+    branches: # 다음 브랜치에 대해
+      - main # main 브랜치
+      - develop # develop 브랜치
+
+jobs: # Job 정의
+  build: # Job 이름
+    runs-on: ubuntu-latest # Job이 실행될 환경
+
+    steps: # Job이 실행될 단계들
+      - name: Check out repository
+        uses: actions/checkout@v2 # GitHub 액션 사용 (저장소 체크아웃)
+
+      - name : Cache Python
+        uses: actions/cache@v2 # GitHub 액션 사용 (캐싱)
+        with: # 입력 매개변수 설정
+          path: ~/.local # 캐싱할 경로
+          key: ${{ runner.os }}-python-${{ hashFiles('**/*.py') }} # 캐싱 키 설정
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v2 # GitHub 액션 사용 (캐싱)
+        with: # 입력 매개변수 설정
+          path: ~/.cache/pip # 캐싱할 경로
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/*.lock') }} # 캐싱 키 설정
+          restore-keys: | # 복원 키 설정
+            ${{ runner.os }}-pip- # 캐싱 복원 키
+
+      - name: Set up Python
+        uses: actions/setup-python@v2 # GitHub 액션 사용 (Python 설정)
+        with: # 입력 매개변수 설정
+          python-version: '3.9' # Python 버전 설정
+
+      - name: Install dependencies
+        run: | # pip 업그레이드, 종속성 설치
+          python -m pip install --upgrade pip 
+          pip install pycryptodome cryptography requests pyjwt
+
+      - name: Run Python script
+        run: python main.py # Python 스크립트 실행
+        env: # 환경 변수 설정
+          BRANCH_NAME: ${{ github.ref }} # 브랜치 이름
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }} # 커밋 메시지
+          PUSHED_BY : ${{ github.actor }} # 푸시한 사용자
+          REPOSITORY: ${{ github.repository }} # 저장소 이름
+          COMMIT_SHA: ${{ github.sha }} # 커밋 해시
+          COMMIT_LINK: https://github.com/${{ github.repository }}/commit/${{ github.sha }} # 커밋 링크

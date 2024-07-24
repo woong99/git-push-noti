@@ -17,4 +17,4 @@
 ---
 
 ## 🎥  결과
-<img alt="스크린샷 2024-03-31 오후 9 27 25" src="https://github.com/woong99/git-push-noti/assets/76946536/f069bca1-368a-4954-87d9-de6b5f9f9821">
+<img alt="결과" src="/assets/result.png">
